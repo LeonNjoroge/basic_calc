@@ -12,9 +12,9 @@
 #include <signal.h>
 #include <limits.h>
 
-#define BUFSIZE 1024
-#define TOK_BUFSIZE 128
-#define TOK_DELIM " \t\r\n\a"
+#define BUFF_TOK 128
+#define DELIM_TOK " \t\r\n\a"
+#define BUFF 1024
 
 /* Points to an array of pointers to strings called the "envirment" */
 extern char **envir;
