@@ -23,7 +23,7 @@ extern char **envir;
 /**
  * struct data - struct that contains all relevant data on runtime
  * @av: argument vector
- * @input: command line written by the user
+ * @in: command line written by the user
  * @args: tokens of the command line
  * @status: last status of the shell
  * @counter: lines counter
@@ -33,7 +33,7 @@ extern char **envir;
 typedef struct dt
 {
 	char **av;
-	char *input;
+	char *in;
 	char **args;
 	int status;
 	int counter;
@@ -125,70 +125,70 @@ int _isdigit(const char *s);
 void rev_string(char *s);
 
 /* check_syntax_error.c */
-int repeated_char(char *input, int i);
-int error_sep_op(char *input, int i, char last);
-int first_char(char *input, int *i);
-void print_syntax_error(dt_shell *datash, char *input, int i, int bool);
-int check_syntax_error(dt_shell *datash, char *input);
+int repeated_char(char *in, int m);
+int error_sep_op(char *in, int m, char last);
+int first_char(char *in, int *m);
+void print_syntax_error(dt_shell *sh_data, char *in, int m, int bool);
+int check_syntax_error(dt_shell *sh_data, char *in);
 
 /* shell_loop.c */
 char *without_comment(char *in);
-void shell_loop(dt_shell *datash);
+void shell_loop(dt_shell *sh_data);
 
 /* read_line.c */
-char *read_line(int *i_eof);
+char *read_line(int *m_eof);
 
 /* split.c */
-char *swap_char(char *input, int bool);
-void add_nodes(list_sep **head_s, list_line **head_l, char *input);
-void go_next(list_sep **list_s, list_line **list_l, dt_shell *datash);
-int split_commands(dt_shell *datash, char *input);
-char **split_line(char *input);
+char *swap_char(char *in, int bool);
+void add_nodes(list_sep **head_s, list_line **head_l, char *in);
+void go_next(list_sep **list_s, list_line **list_l, dt_shell *sh_data);
+int split_commands(dt_shell *sh_data, char *in);
+char **split_line(char *in);
 
 /* rep_var.c */
 void check_env(l_var **h, char *in, dt_shell *data);
 int check_vars(l_var **h, char *in, char *st, dt_shell *data);
-char *replaced_input(l_var **head, char *input, char *new_input, int nlen);
-char *rep_var(char *input, dt_shell *datash);
+char *replaced_in(l_var **head, char *in, char *new_in, int nlen);
+char *rep_var(char *in, dt_shell *sh_data);
 
 /* get_line.c */
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 
 /* exec_line */
-int exec_line(dt_shell *datash);
+int exec_line(dt_shell *sh_data);
 
 /* cmd_exec.c */
-int is_cdir(char *path, int *i);
+int ms_cdir(char *path, int *m);
 char *_which(char *cmd, char **_envir);
-int is_executable(dt_shell *datash);
-int check_error_cmd(char *dir, dt_shell *datash);
-int cmd_exec(dt_shell *datash);
+int ms_executable(dt_shell *sh_data);
+int check_error_cmd(char *dir, dt_shell *sh_data);
+int cmd_exec(dt_shell *sh_data);
 
 /* env1.c */
-char *_getenv(const char *name, char **_envir);
-int _env(dt_shell *datash);
+char *get_envir(const char *name, char **_envir);
+int _envir(dt_shell *sh_data);
 
 /* env2.c */
 char *copy_info(char *name, char *value);
-void set_env(char *name, char *value, dt_shell *datash);
-int _setenv(dt_shell *datash);
-int _unsetenv(dt_shell *datash);
+void set_env(char *name, char *value, dt_shell *sh_data);
+int _setenv(dt_shell *sh_data);
+int _unsetenv(dt_shell *sh_data);
 
 /* cd.c */
-void cd_dot(dt_shell *datash);
-void cd_to(dt_shell *datash);
-void cd_previous(dt_shell *datash);
-void cd_to_home(dt_shell *datash);
+void cd_dot(dt_shell *sh_data);
+void cd_to(dt_shell *sh_data);
+void cd_previous(dt_shell *sh_data);
+void cd_to_home(dt_shell *sh_data);
 
 /* cd_shell.c */
-int cd_shell(dt_shell *datash);
+int cd_shell(dt_shell *sh_data);
 
 /* get_builtin */
-int (*get_builtin(char *cmd))(dt_shell *datash);
+int (*get_builtin(char *cmd))(dt_shell *sh_data);
 
 /* _exit.c */
-int exit_shell(dt_shell *datash);
+int exit_shell(dt_shell *sh_data);
 
 /* aux_stdlib.c */
 int get_len(int n);
@@ -197,20 +197,20 @@ int _atoi(char *s);
 
 /* aux_error1.c */
 char *strcat_cd(dt_shell *, char *, char *, char *);
-char *error_get_cd(dt_shell *datash);
-char *error_not_found(dt_shell *datash);
-char *error_exit_shell(dt_shell *datash);
+char *error_get_cd(dt_shell *sh_data);
+char *error_not_found(dt_shell *sh_data);
+char *error_exit_shell(dt_shell *sh_data);
 
 /* aux_error2.c */
 char *error_get_alias(char **args);
-char *error_env(dt_shell *datash);
+char *error_env(dt_shell *sh_data);
 char *error_syntax(char **args);
 char *error_permission(char **args);
-char *error_path_126(dt_shell *datash);
+char *error_path_126(dt_shell *sh_data);
 
 
 /* get_error.c */
-int get_error(dt_shell *datash, int eval);
+int get_error(dt_shell *sh_data, int eval);
 
 /* get_sigint.c */
 void get_sigint(int sig);
@@ -228,6 +228,6 @@ void aux_help_alias(void);
 void aux_help_cd(void);
 
 /* get_help.c */
-int get_help(dt_shell *datash);
+int get_help(dt_shell *sh_data);
 
 #endif
